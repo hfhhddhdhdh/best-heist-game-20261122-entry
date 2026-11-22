@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Meridian Heist — a three-job stealth robbery game</title>
+<link rel="icon" href="data:,">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #0a0f1c;
+    color: #e8e6df;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  header { text-align: center; padding: 14px 12px 4px; }
+  header h1 { margin: 0; font-size: 30px; letter-spacing: 4px; color: #f2c14e; }
+  header p { margin: 4px 0 0; color: #9aa7bd; font-size: 14px; }
+  #hud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    align-items: center;
+    justify-content: center;
+    width: 960px;
+    max-width: 96vw;
+    background: #0d1322;
+    border: 1px solid #2c3a55;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  #hud .label { color: #9aa7bd; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  #alarm-wrap { display: flex; align-items: center; gap: 6px; }
+  #alarm-bar {
+    width: 120px;
+    height: 12px;
+    background: #1b2740;
+    border: 1px solid #2c3a55;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  #alarm-fill { display: block; height: 100%; width: 0%; background: #37b268; }
+  #hud button {
+    background: #1b2740;
+    color: #e8e6df;
+    border: 1px solid #4d648f;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  #hud button:hover { background: #2c3a55; }
+  #stage { position: relative; width: 960px; max-width: 96vw; }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #162136;
+    border: 1px solid #2c3a55;
+    border-radius: 8px;
+  }
+  #overlay {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 15, 28, 0.72);
+    border-radius: 8px;
+  }
+  .panel {
+    background: #0d1322;
+    border: 1px solid #4d648f;
+    border-radius: 10px;
+    padding: 22px 28px;
+    max-width: 560px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+  .panel h2 { margin: 0 0 8px; color: #f2c14e; letter-spacing: 2px; }
+  .panel p { margin: 6px 0; }
+  .panel .dim { color: #9aa7bd; font-size: 13px; }
+  .panel .big { font-size: 22px; font-weight: 700; color: #37b268; letter-spacing: 2px; }
+  .panel button {
+    display: block;
+    margin: 14px auto 4px;
+    background: #1b2740;
+    color: #e8e6df;
+    border: 1px solid #4d648f;
+    border-radius: 6px;
+    padding: 9px 18px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .panel button.primary { background: #f2c14e; color: #14100a; border-color: #f2c14e; font-weight: 700; }
+  .panel button:hover { filter: brightness(1.15); }
+  footer { padding: 10px 12px 20px; color: #9aa7bd; font-size: 12px; text-align: center; }
+  #hint { color: #9aa7bd; font-size: 12px; padding: 0 12px 14px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>THE MERIDIAN HEIST</h1>
+  <p>Three jobs. One crew. Zero witnesses.</p>
+</header>
+<div id="hud">
+  <span><span class="label">Job</span> <span id="hud-level">—</span></span>
+  <span><span class="label">Loot</span> <span id="hud-loot">$0 / $0</span></span>
+  <span id="alarm-wrap"><span class="label">Alarm</span>
+    <span id="alarm-bar"><span id="alarm-fill"></span></span>
+    <span id="alarm-word">Calm</span></span>
+  <span><span class="label">Time</span> <span id="hud-time">—</span></span>
+  <span><span class="label">Lives</span> <span id="hud-lives">♥♥♥</span></span>
+  <span><span class="label">Score</span> <span id="hud-score">$0</span></span>
+  <button id="btn-smoke" type="button">Smoke (Q) ×0</button>
+  <button id="btn-emp" type="button">EMP (E) ×0</button>
+</div>
+<div id="stage">
+  <canvas id="game" width="960" height="600"></canvas>
+  <div id="overlay"></div>
+</div>
+<p id="hint">WASD / arrows to move &middot; Shift to sneak &middot; click the floor to walk there &middot;
+Q smoke &middot; E EMP &middot; hold F by a safe to crack it &middot; P pause &middot; M mute</p>
+<footer>The Meridian Heist — a make.fun bounty entry by jjj. No libraries, no network requests: canvas shapes and synthesized sound only.</footer>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
